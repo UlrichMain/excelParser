@@ -6,8 +6,8 @@ class Client{
     string secondName;
     int gender;
     string race;
-    string University;
-    string Degree;
+    string university;
+    string degree;
     string comments;
     string JobTitle;
 }
