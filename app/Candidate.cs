@@ -2,14 +2,14 @@
 class Client{
     long id;
     string pictureString;
-    string firstName;
-    string secondName;
+    string name;
+    string surname;
     int gender;
     string race;
     string university;
     string degree;
     string comments;
-    string JobTitle;
+    string jobTitle;
 }
 
 }
