@@ -1,4 +1,5 @@
-﻿class Client{
+﻿namespace excelParser{   
+class Client{
     long id;
     string pictureString;
     string firstName;
@@ -7,8 +8,8 @@
     string race;
     string University;
     string Degree;
-    string[] comments;
+    string comments;
     string JobTitle;
+}
 
-    
 }
