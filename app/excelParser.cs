@@ -21,6 +21,7 @@ namespace excelParser{
                 
                 string name;
                 string surname;
+                string location;
                 string gender;
                 string race;
                 string university;
@@ -44,12 +45,13 @@ namespace excelParser{
                         var nVals = full.Split(" and ");
                         name = nVals[0];
                         surname = nVals[1];
-                        gender = cVals[3];
-                        race = cVals[4];
-                        university = cVals[5];
-                        degree = cVals[6];
+                        location = cVals[3];
+                        gender = cVals[4];
+                        race = cVals[5];
+                        university = cVals[6];
+                        degree = cVals[7];
                         comments = " ";
-                        for (int i = 7; i < cVals.Length - 1; i++)
+                        for (int i = 8; i < cVals.Length - 1; i++)
                         {
                             comments = comments + cVals[i];
                         }
@@ -60,12 +62,13 @@ namespace excelParser{
                     {
                         name = cVals[2];
                         surname = cVals[3];
-                        gender = cVals[4];
-                        race = cVals[5];
-                        university = cVals[6];
-                        degree = cVals[7];
+                        location = cVals[4];
+                        gender = cVals[5];
+                        race = cVals[6];
+                        university = cVals[7];
+                        degree = cVals[8];
                         comments = " ";
-                        for (int i = 8; i < cVals.Length - 1; i++)
+                        for (int i = 9; i < cVals.Length - 1; i++)
                         {
                             comments = comments + cVals[i];
                         }
@@ -73,7 +76,7 @@ namespace excelParser{
                     }
 
                     jobTitle = cVals[cVals.Length - 1];
-                    Candidate temp = new Candidate(cID, pictureString, name, surname, gender, race, university, degree, comments, jobTitle);
+                    Candidate temp = new Candidate(cID, pictureString, name, surname, location, gender, race, university, degree, comments, jobTitle);
 
                 }
             }
