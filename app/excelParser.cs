@@ -1,9 +1,20 @@
-using Candidate;
 
 namespace excelParser{
 
-    Candidate[] candidates;
-    Candidate temp = new Candidate();
+    class Parser
+    {
+        Candidate[] candidates;
+
+
+
+        static void Main(string[] args)
+        {
+            System.Console.WriteLine("Hello World!");
+        }
+    }
+
+
+
     
 
 

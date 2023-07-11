@@ -1,5 +1,7 @@
 ﻿namespace excelParser{   
-class Client{
+
+
+class Candidate{
     long id;
     string pictureString;
     string name;
