@@ -1,84 +1,18 @@
 
 using System.Reflection;
 
+
 namespace excelParser{
 
     class Parser
     {
-        static string[] allowedJobs = { "software engineer", "ux engineer", "business analyst" }; //must all be lower case
         static Candidate[] candidates;
 
-
-        public void getCandidates()
+        static void makeCandidatesList()
         {
-            string path = "C:\Users\USER\Downloads\ExcelParser.csv";
-            StreamReader strRead = null;
-            if (File.exists(path))
-            {
-                strRead = new SreamReader(File.openRead(path));
-                List<string> clientVals = new List<string>();
-                var headers = strRead.ReadLine();
 
-                string cID = cVals[0];
-                string pictureString = cVals[1];
-                string name;
-                string surname;
-                string gender;
-                string race;
-                string university;
-                string degree;
-                string comments;
-                string jobTitle;
-
-                while (!strRead.EndOfStream)
-                {
-                   
-
-                    var cLine = strRead.ReadLine();
-                    var cVals = cLine.Split(',');
-
-                    
-
-                    if (cVals[2].Contains(" and "))
-                    {
-                        string full = cVals[2];
-                        var nVals = full.Split(" and ");
-                        name = nVals[0];
-                        surname = nVals[1];
-                        gender = cVals[3];
-                        race = cVals[4];
-                        university = cVals[5];
-                        degree = cVals[6];
-   
-                        for (int i = 7; i < cVals.Length - 1; i++)
-                        {
-                            comments = comments + cVals[i]
-                        }
-                        
-                    }
-
-                    else
-                    {
-                        name = cVals[2];
-                        surname = cVals[3];
-                        gender = cVals[4];
-                        race = cVals[5];
-                        university = cVals[6];
-                         degree = cVals[7];
-                        
-                        for (int i = 8; i < cVals.Length - 1; i++)
-                        {
-                            comments = comments + cVals[i]
-                        }
-                    
-                    }
-
-                    string jobTitle = cVals[cVals.Length - 1];
-                    Candidate temp = new Candidate(cID, pictureString, name, surname, gender, race, university, degree, comments, jobTitle);
-
-                }
-            }
         }
+
 
         static void Main(string[] args)
         {
@@ -95,24 +29,30 @@ namespace excelParser{
             candidate.comments = "hard working mfer";
             candidate.jobTitle = "software Engineer";
 
-            Console.Write(isValidCandidate(candidate));
+            Console.Write(ErrorChecker.isValidCandidate(candidate));
         }
 
-        /* Required Restrictions:
-         * numbers
-         * pictureString
-         * name
-         * surname
-         * location
-         * gender
-         * race
-         * university
-         * degree
-         * comments
-         * jobTitle
-         */
+    }
 
-        static Boolean isValidCandidate(Candidate candidate)
+    class ErrorChecker
+    {
+        static string[] allowedJobs = { "software engineer", "ux engineer", "business analyst" }; //must all be lower case
+
+        /* Required Restrictions:
+  * numbers
+  * pictureString
+  * name
+  * surname
+  * location
+  * gender
+  * race
+  * university
+  * degree
+  * comments
+  * jobTitle
+  */
+
+        public static Boolean isValidCandidate(Candidate candidate)
         {
 
             if (!hasValidValues(candidate))
@@ -196,7 +136,7 @@ namespace excelParser{
              * If University is empty then degree can not be empty 
              */
 
-            if (candidate.number.ToString()=="")
+            if (candidate.number.ToString() == "")
                 return false;
 
             if (candidate.pictureString == "")
@@ -217,7 +157,7 @@ namespace excelParser{
             if (candidate.race == "")
                 return false;
 
-            if (candidate.university != "" && candidate.degree=="")
+            if (candidate.university != "" && candidate.degree == "")
                 return false;
 
             if (candidate.jobTitle == "")
@@ -274,17 +214,12 @@ namespace excelParser{
         static Boolean isValidJobTitle(string? job)
         {
             if (!allowedJobs.Contains(job.ToLower()))
-                return false; 
+                return false;
 
             return true;
         }
 
-
     }
-
-
-
-    
 
 
 }
