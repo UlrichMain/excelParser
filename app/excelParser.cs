@@ -10,7 +10,11 @@ namespace excelParser{
 
         static void makeCandidatesList()
         {
+            WorkBook workBook = WorkBook.Load("test.xlsx");
+            WorkSheet workSheet = workBook.WorkSheets.First();
 
+            String test = workSheet.Rows[1].ToString();
+            Console.Write(test);
         }
 
 
@@ -30,6 +34,7 @@ namespace excelParser{
             candidate.jobTitle = "software Engineer";
 
             Console.Write(ErrorChecker.isValidCandidate(candidate));
+            makeCandidatesList();
         }
 
     }
