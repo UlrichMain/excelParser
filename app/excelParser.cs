@@ -8,13 +8,82 @@ namespace excelParser{
     {
         static Candidate[] candidates;
 
-        static void makeCandidatesList()
+        static void makeCandidatesListBackup()
         {
             WorkBook workBook = WorkBook.Load("test.xlsx");
             WorkSheet workSheet = workBook.WorkSheets.First();
 
             String test = workSheet.Rows[1].ToString();
             Console.Write(test);
+        }
+
+        static void makeCandidatesList()
+        {
+            string path = "C:\\Users\\USER\\Downloads\\ExcelParser.csv";
+            StreamReader strRead = null;
+            if (File.Exists(path))
+            {
+                strRead = new StreamReader(File.OpenRead(path));
+                var headers = strRead.ReadLine();
+                
+                string name;
+                string surname;
+                string gender;
+                string race;
+                string university;
+                string degree;
+                string comments;
+                string jobTitle;
+
+                while (!strRead.EndOfStream)
+                {
+                   
+
+                    var cLine = strRead.ReadLine();
+                    var cVals = cLine.Split(',');
+
+                    string cID = cVals[0];
+                    string pictureString = cVals[1];
+
+                    if (cVals[2].Contains(" and "))
+                    {
+                        string full = cVals[2];
+                        var nVals = full.Split(" and ");
+                        name = nVals[0];
+                        surname = nVals[1];
+                        gender = cVals[3];
+                        race = cVals[4];
+                        university = cVals[5];
+                        degree = cVals[6];
+                        comments = " ";
+                        for (int i = 7; i < cVals.Length - 1; i++)
+                        {
+                            comments = comments + cVals[i];
+                        }
+                        
+                    }
+
+                    else
+                    {
+                        name = cVals[2];
+                        surname = cVals[3];
+                        gender = cVals[4];
+                        race = cVals[5];
+                        university = cVals[6];
+                        degree = cVals[7];
+                        comments = " ";
+                        for (int i = 8; i < cVals.Length - 1; i++)
+                        {
+                            comments = comments + cVals[i];
+                        }
+                    
+                    }
+
+                    jobTitle = cVals[cVals.Length - 1];
+                    Candidate temp = new Candidate(cID, pictureString, name, surname, gender, race, university, degree, comments, jobTitle);
+
+                }
+            }
         }
 
 
