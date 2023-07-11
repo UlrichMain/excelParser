@@ -13,3 +13,4 @@ D:\ComputerScience\Projects\Entelect\app\obj\Debug\net7.0\refint\app.dll
 D:\ComputerScience\Projects\Entelect\app\obj\Debug\net7.0\app.pdb
 D:\ComputerScience\Projects\Entelect\app\obj\Debug\net7.0\app.genruntimeconfig.cache
 D:\ComputerScience\Projects\Entelect\app\obj\Debug\net7.0\ref\app.dll
+C:\Users\USER\Source\Repos\UlrichMain\excelParser\app\obj\Debug\net7.0\app.pdb
