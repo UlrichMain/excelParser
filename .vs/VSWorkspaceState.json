@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\app",
-    "\\app\\bin"
+    "\\app"
   ],
-  "SelectedNode": "\\app\\excelParser.cs",
   "PreviewInSolutionExplorer": false
 }
