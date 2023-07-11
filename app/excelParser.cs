@@ -11,16 +11,14 @@ namespace excelParser{
 
         public void getCandidates()
         {
-            string path = "C:\Users\USER\Downloads\ExcelParser.csv";
+            string path = "C:\\Users\\USER\\Downloads\\ExcelParser.csv";
             StreamReader strRead = null;
-            if (File.exists(path))
+            if (File.Exists(path))
             {
-                strRead = new SreamReader(File.openRead(path));
-                List<string> clientVals = new List<string>();
+                strRead = new StreamReader(File.OpenRead(path));
                 var headers = strRead.ReadLine();
 
-                string cID = cVals[0];
-                string pictureString = cVals[1];
+                
                 string name;
                 string surname;
                 string gender;
@@ -37,7 +35,8 @@ namespace excelParser{
                     var cLine = strRead.ReadLine();
                     var cVals = cLine.Split(',');
 
-                    
+                    string cID = cVals[0];
+                    string pictureString = cVals[1];
 
                     if (cVals[2].Contains(" and "))
                     {
@@ -49,10 +48,10 @@ namespace excelParser{
                         race = cVals[4];
                         university = cVals[5];
                         degree = cVals[6];
-   
+                        comments = " ";
                         for (int i = 7; i < cVals.Length - 1; i++)
                         {
-                            comments = comments + cVals[i]
+                            comments = comments + cVals[i];
                         }
                         
                     }
@@ -64,16 +63,16 @@ namespace excelParser{
                         gender = cVals[4];
                         race = cVals[5];
                         university = cVals[6];
-                         degree = cVals[7];
-                        
+                        degree = cVals[7];
+                        comments = " ";
                         for (int i = 8; i < cVals.Length - 1; i++)
                         {
-                            comments = comments + cVals[i]
+                            comments = comments + cVals[i];
                         }
                     
                     }
 
-                    string jobTitle = cVals[cVals.Length - 1];
+                    jobTitle = cVals[cVals.Length - 1];
                     Candidate temp = new Candidate(cID, pictureString, name, surname, gender, race, university, degree, comments, jobTitle);
 
                 }
