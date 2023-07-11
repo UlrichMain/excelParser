@@ -28,6 +28,8 @@ namespace excelParser {
                 string degree = cVals[7];
                 string comments = cVals[8];
                 string jobTitle = cVals[9];
+
+
             }
 
         }
