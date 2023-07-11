@@ -15,4 +15,13 @@ public class Candidate{ //do not think it has to be private?
     public string? jobTitle;
 }
 
+    public Candidate(string no, string picString, string fName, string sName, string loc, string gend, string rc, string uni, string deg, string com string job)
+    {
+        number = no;
+        pictureString = picString;
+        name = fName;
+        surname = sName;
+
+    }
+
 }
