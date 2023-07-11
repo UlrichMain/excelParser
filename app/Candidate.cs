@@ -2,9 +2,10 @@
 
 
 public class Candidate{ //do not think it has to be private?
-    public string? number;
+    public long? number;
     public string? pictureString;
     public string? name;
+    public string? middlenames;
     public string? surname;
     public string? location;
     public string? gender;
