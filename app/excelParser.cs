@@ -23,8 +23,8 @@ namespace excelParser{
 
                 string name;
                 string surname;
-                string gender;
-                string race;
+                Gender gender;
+                Race race;
                 string university;
                 string location;
                 string degree;
@@ -38,7 +38,7 @@ namespace excelParser{
                     String cLine = cNewLine.Substring(1, cNewLine.Length - 2);
                     String[] cVals = cLine.Split(';');
 
-                    string cID = cVals[0];
+                    int cID = int.Parse(cVals[0]);
                     string pictureString = cVals[1];
 
                     if (cVals[2].Contains(" and "))
@@ -48,8 +48,8 @@ namespace excelParser{
                         name = nVals[0];
                         surname = nVals[1];
                         location = cVals[3];
-                        gender = cVals[4];
-                        race = cVals[5];
+                        gender = (Gender)Enum.Parse(typeof(Gender), cVals[4]);
+                        race = (Race)Enum.Parse(typeof(Race), cVals[5]);
                         university = cVals[6];
                         degree = cVals[7];
                         comments = " ";
@@ -67,8 +67,8 @@ namespace excelParser{
                         name = nVals[0];
                         surname = nVals[1];
                         location = cVals[3];
-                        gender = cVals[4];
-                        race = cVals[5];
+                        gender = (Gender)Enum.Parse(typeof(Gender), cVals[4]);
+                        race = (Race)Enum.Parse(typeof(Race), cVals[5]);
                         university = cVals[6];
                         degree = cVals[7];
                         comments = " ";
@@ -80,7 +80,11 @@ namespace excelParser{
                     }
 
                     jobTitle = cVals[cVals.Length - 1];
-                    Candidate temp = new Candidate(cID, pictureString, name, surname, location, gender, race, university, degree, comments, jobTitle);
+
+
+                    Journey tempJourn = new Journey(Status.Prospective, gender, OpenDay.Scheduled, comments, new DateTime(2023, 10, 07));
+
+                    Candidate temp = new Candidate(cID, pictureString, name, surname, location, gender, race, university, degree, comments, jobTitle, tempJourn);
                     temp.printCandidate();
                     if (ErrorChecker.isValidCandidate(temp))
                     {
@@ -94,13 +98,13 @@ namespace excelParser{
                     line++;
                 }
             }
-
+            Console.ReadLine();
             return candidates;
         }
 
         static void Main(string[] args)
         {
-            Candidate[] candidates = makeCandidatesList("C:\\Users\\ulric\\Downloads\\ExcelParser(1).csv");
+            Candidate[] candidates = makeCandidatesList("C:\\Users\\USER\\Downloads\\ExcelParser(1).csv");
         }
     }
 
@@ -114,34 +118,34 @@ namespace excelParser{
             if (!hasValidValues(candidate))
                 return false;
 
-            if (!isValidNumber(candidate.number))
+            if (!isValidNumber(candidate.getNum()))
                 return false;
 
-            if (!isValidPicture(candidate.pictureString))
+            if (!isValidPicture(candidate.getPictureString()))
                 return false;
 
-            if (!isValidName(candidate.name))
+            if (!isValidName(candidate.getName()))
                 return false;
 
-            if (!isValidSurname(candidate.surname))
+            if (!isValidSurname(candidate.getSurname()))
                 return false;
 
-            if (!isValidLocation(candidate.location))
+            if (!isValidLocation(candidate.getLocation()))
                 return false;
 
-            if (!isValidGender(candidate.gender))
+            if (!isValidGender(candidate.getGender()))
                 return false;
 
-            if (!isValidUniversity(candidate.university))
+            if (!isValidUniversity(candidate.getUni()))
                 return false;
 
-            if (!isValidDegree(candidate.degree))
+            if (!isValidDegree(candidate.getDeg()))
                 return false;
 
-            if (!isValidComment(candidate.comments))
+            if (!isValidComment(candidate.getComm()))
                 return false;
 
-            if (!isValidJobTitle(candidate.jobTitle))
+            if (!isValidJobTitle(candidate.getJob()))
                 return false;
 
 
@@ -154,34 +158,34 @@ namespace excelParser{
              * If University is empty then degree can not be empty 
              */
 
-            if (candidate.number.ToString() == "")
+            if (candidate.getNum() < 0)
                 return false;
 
-            if (candidate.name == "")
+            if (candidate.getName() == "")
                 return false;
 
-            if (candidate.surname == "")
+            if (candidate.getSurname() == "")
                 return false;
 
-            if (candidate.location == "")
+            if (candidate.getLocation() == "")
                 return false;
 
-            if (candidate.gender == "")
+            if (!Enum.IsDefined(typeof(Gender), candidate.getGender()))
                 return false;
 
-            if (candidate.race == "")
+            if (!Enum.IsDefined(typeof(Race), candidate.getRace()))
                 return false;
 
-            if (candidate.university != "" & candidate.degree == "")
+            if (candidate.getUni() != "" & candidate.getDeg() == "")
                 return false;
 
-            if (candidate.jobTitle == "")
+            if (candidate.getJob() == "")
                 return false;
 
             return true;
         }
 
-        static Boolean isValidNumber(string? number)
+        static Boolean isValidNumber(int number)
         {
             return true;
         }
@@ -206,7 +210,7 @@ namespace excelParser{
             return true;
         }
 
-        static Boolean isValidGender(string? gender)
+        static Boolean isValidGender(Gender gender)
         {
             return true;
         }
