@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VW0CPR7Fy80FDXglVm9VP0Dy2RvcCvs12Nt4ZzoXpJOpHu2Js2wwgVbH2auqO+tl+BbOwiiuR13kdJ8R7JKxQA==",
+  "dgSpecHash": "h+aLS/7ngS2ure6awr64FX632wA5sVnXB+VXqBXp4EVbuf7eE5xOB3hKgpRY9ymdoKeWBL9NB94U0kLw6uOGyw==",
   "success": true,
-  "projectFilePath": "D:\\ComputerScience\\Projects\\Entelect\\app\\app.csproj",
+  "projectFilePath": "D:\\ComputerScience\\Projects\\excelParser\\app\\app.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

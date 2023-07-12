@@ -1,25 +1,20 @@
 
 using System.Reflection;
-
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace excelParser{
 
     class Parser
     {
-        static Candidate[] candidates;
 
-        static void makeCandidatesListBackup()
+        static Candidate[] makeCandidatesList(string path)
         {
-            WorkBook workBook = WorkBook.Load("test.xlsx");
-            WorkSheet workSheet = workBook.WorkSheets.First();
+            /// <summary>
+            /// path variable must be the entire path to the file and must include the filename and extension
+            /// </summary>
+            Candidate[] candidates = { };
 
-            String test = workSheet.Rows[1].ToString();
-            Console.Write(test);
-        }
-
-        static void makeCandidatesList()
-        {
-            string path = "C:\\Users\\USER\\Downloads\\ExcelParser.csv";
             StreamReader strRead = null;
             if (File.Exists(path))
             {
@@ -31,16 +26,17 @@ namespace excelParser{
                 string gender;
                 string race;
                 string university;
+                string location;
                 string degree;
                 string comments;
                 string jobTitle;
+                int line = 0;
 
                 while (!strRead.EndOfStream)
                 {
-                   
-
-                    var cLine = strRead.ReadLine();
-                    var cVals = cLine.Split(',');
+                    String cNewLine = strRead.ReadLine();
+                    String cLine = cNewLine.Substring(1, cNewLine.Length - 2);
+                    String[] cVals = cLine.Split(';');
 
                     string cID = cVals[0];
                     string pictureString = cVals[1];
@@ -66,15 +62,17 @@ namespace excelParser{
 
                     else
                     {
-                        name = cVals[2];
-                        surname = cVals[3];
-                        location = cVals[4];
-                        gender = cVals[5];
-                        race = cVals[6];
-                        university = cVals[7];
-                        degree = cVals[8];
+                        string full = cVals[2];
+                        var nVals = full.Split(',');
+                        name = nVals[0];
+                        surname = nVals[1];
+                        location = cVals[3];
+                        gender = cVals[4];
+                        race = cVals[5];
+                        university = cVals[6];
+                        degree = cVals[7];
                         comments = " ";
-                        for (int i = 9; i < cVals.Length - 1; i++)
+                        for (int i = 8; i < cVals.Length - 1; i++)
                         {
                             comments = comments + cVals[i];
                         }
@@ -83,54 +81,36 @@ namespace excelParser{
 
                     jobTitle = cVals[cVals.Length - 1];
                     Candidate temp = new Candidate(cID, pictureString, name, surname, location, gender, race, university, degree, comments, jobTitle);
-
+                    temp.printCandidate();
+                    if (ErrorChecker.isValidCandidate(temp))
+                    {
+                        candidates.Append(temp);
+                    }
+                    else
+                    {
+                        Console.WriteLine(string.Format("Invalid data entry on line {0}. Returned list is incomplete", line.ToString()));
+                        break;
+                    }
+                    line++;
                 }
             }
-        }
 
+            return candidates;
+        }
 
         static void Main(string[] args)
         {
-            Candidate candidate = new Candidate();
-            candidate.number = 1;
-            candidate.pictureString = "1232";
-            candidate.name = "Jessica";
-            candidate.surname = "Parker";
-            candidate.location = "Sandton";
-            candidate.gender = "Other";
-            candidate.race = "White";
-            candidate.university = "University of Johannesburg";
-            candidate.degree = "Bsc in Computer Science";
-            candidate.comments = "hard working mfer";
-            candidate.jobTitle = "software Engineer";
-
-            Console.Write(ErrorChecker.isValidCandidate(candidate));
-            makeCandidatesList();
+            Candidate[] candidates = makeCandidatesList("C:\\Users\\ulric\\Downloads\\ExcelParser(1).csv");
         }
-
     }
 
     class ErrorChecker
     {
         static string[] allowedJobs = { "software engineer", "ux engineer", "business analyst" }; //must all be lower case
 
-        /* Required Restrictions:
-  * numbers
-  * pictureString
-  * name
-  * surname
-  * location
-  * gender
-  * race
-  * university
-  * degree
-  * comments
-  * jobTitle
-  */
-
         public static Boolean isValidCandidate(Candidate candidate)
         {
-
+            string error = "";
             if (!hasValidValues(candidate))
                 return false;
 
@@ -168,44 +148,6 @@ namespace excelParser{
             return true;
         }
 
-        static Boolean hasNoNullValues(Candidate candidate)
-        {
-            /* Checks if every attribute but comments, univesity, degree and middlename are null
-             * If University is null then degree can not be null.
-             * This function is probably not needed, depending on Richard's implementation
-             */
-
-            if (candidate.number.ToString() == null)
-                return false;
-
-            if (candidate.pictureString == null)
-                return false;
-
-            if (candidate.name == null)
-                return false;
-
-            if (candidate.surname == null)
-                return false;
-
-            if (candidate.location == null)
-                return false;
-
-            if (candidate.gender == null)
-                return false;
-
-            if (candidate.race == null)
-                return false;
-
-            if (candidate.university != null && candidate.degree == null)
-                return false;
-
-            if (candidate.jobTitle == null)
-                return false;
-
-            return true;
-
-        }
-
         static Boolean hasValidValues(Candidate candidate)
         {
             /* Checks if every attribute but comments, univesity, degree and middlename are empty
@@ -213,9 +155,6 @@ namespace excelParser{
              */
 
             if (candidate.number.ToString() == "")
-                return false;
-
-            if (candidate.pictureString == "")
                 return false;
 
             if (candidate.name == "")
@@ -233,7 +172,7 @@ namespace excelParser{
             if (candidate.race == "")
                 return false;
 
-            if (candidate.university != "" && candidate.degree == "")
+            if (candidate.university != "" & candidate.degree == "")
                 return false;
 
             if (candidate.jobTitle == "")
@@ -242,7 +181,7 @@ namespace excelParser{
             return true;
         }
 
-        static Boolean isValidNumber(long? number)
+        static Boolean isValidNumber(string? number)
         {
             return true;
         }
