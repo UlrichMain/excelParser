@@ -19,7 +19,7 @@ public class Journey
 
 	public void toString()
 	{
-		Console.WriteLine(string.Format(" Candidate Journey:\nStatus: {0} |Gender: {1} |OpenDay: {2} |Date: {3} " +
+		Console.WriteLine(string.Format("Candidate Journey:\nStatus: {0} |Gender: {1} |OpenDay: {2} |Date: {3} " +
 			"\nComments:{4}", this.stat, this.gen, this.OD, this.date, this.comments));
 	}
 
